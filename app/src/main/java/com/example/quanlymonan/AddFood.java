@@ -75,7 +75,7 @@ public class AddFood extends AppCompatActivity {
         return false;
     }
     private boolean update(Foods foods, MonAnDataBaseHelper db){
-        int row = db.updateNote(foods);
+        int row = db.updateFood(foods);
         Toast.makeText(getBaseContext(), " "  + row, Toast.LENGTH_LONG).show();
         db.close();
         return false;

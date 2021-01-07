@@ -67,7 +67,7 @@ public class MonAnDataBaseHelper extends SQLiteOpenHelper {
         return res;
     }
 
-    public int updateNote(Foods food){
+    public int updateFood(Foods food){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues =  new ContentValues();
         contentValues.put(COL_NAME_FOOD, food.getNameFood());
@@ -81,7 +81,7 @@ public class MonAnDataBaseHelper extends SQLiteOpenHelper {
         return res;
     }
 
-    public ArrayList<Foods> getAllNote(){
+    public ArrayList<Foods> getAllFood(){
         String sql = "select * from " + DB_TABLE;
         ArrayList<Foods> foods = new ArrayList<>();
         SQLiteDatabase db = getWritableDatabase();
@@ -94,7 +94,7 @@ public class MonAnDataBaseHelper extends SQLiteOpenHelper {
         return  foods;
     }
 
-    public void deleteNote(Foods food){
+    public void deleteFood(Foods food){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(DB_TABLE,COL_FOOD_ID+ " = ?", new String[] {
                 String.valueOf(food.getId())

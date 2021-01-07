@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         init();
 
         foodsDB = new MonAnDataBaseHelper(MainActivity.this);
-        foods = foodsDB.getAllNote();
+        foods = foodsDB.getAllFood();
 
         // create adapter
         adapter = new Myadapter();
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateListFoods(){
-        foods = foodsDB.getAllNote();
+        foods = foodsDB.getAllFood();
         adapter = new Myadapter();
         lvFoods.setAdapter(adapter);
     }
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void deleteNote(Foods note){
         MonAnDataBaseHelper db = new MonAnDataBaseHelper(this);
-        db.deleteNote(note);
+        db.deleteFood(note);
         this.foods.remove(note);
         this.adapter.notifyDataSetChanged();
     }
@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
         menu.add(0, CREATE_NOTE,1, "Create Note");
         menu.add(0, UPDATE_NOTE,2, "Update Note");
         menu.add(0, DELETE_NOTE,3, "Delete Note");
-
     }
 
     @Override
@@ -99,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), selectNote.getNameFood(), Toast.LENGTH_LONG).show();
                 break;
             case(CREATE_NOTE) :
+                Intent intent1 = new Intent(getApplicationContext(), AddFood.class);
+                startActivityForResult(intent1, CODE);
                 break;
             case (DELETE_NOTE):
                 new AlertDialog.Builder(this)
@@ -138,16 +139,21 @@ public class MainActivity extends AppCompatActivity {
         @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            Foods note = foods.get(position);
+            Foods food = foods.get(position);
 
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.view_food, null);
             TextView name = convertView.findViewById(R.id.txt_name);
             TextView price = convertView.findViewById(R.id.txt_price);
             ImageView img = convertView.findViewById(R.id.img_food);
-            img.setImageResource(R.drawable.ic_android_black_24dp);
-            name.setText(note.getNameFood());
-            price.setText(String.valueOf(note.getPriceFood()));
+            if(food.getTypeFood().equals("ASIA")){
+                img.setImageResource(R.drawable.a);
+            }else {
+                img.setImageResource(R.drawable.b);
+            }
+
+            name.setText(food.getNameFood());
+            price.setText(String.valueOf(food.getPriceFood()));
             return convertView;
 
         }
